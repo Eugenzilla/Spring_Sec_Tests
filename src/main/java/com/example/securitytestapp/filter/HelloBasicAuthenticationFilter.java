@@ -19,6 +19,7 @@ public class HelloBasicAuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest)servletRequest;
         HttpServletResponse resp = (HttpServletResponse)servletResponse;
 
+        ///////////////
         String authHeader = req.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Basic ")) {
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -27,6 +28,7 @@ public class HelloBasicAuthenticationFilter implements Filter {
             return; // чтобы цепочка фильтров не продолжалась
         }
 
+        /////////////////
         String base64Credentials = authHeader.split(" ")[1];
         byte[] bytesDecodedCredentials = Base64.getDecoder().decode(base64Credentials);
         String credentials = new String(bytesDecodedCredentials);
@@ -40,6 +42,8 @@ public class HelloBasicAuthenticationFilter implements Filter {
             resp.getOutputStream().close();
             return;
         }
+
+        /////////////////
 
         filterChain.doFilter(servletRequest,servletResponse);
     }
